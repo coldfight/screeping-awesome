@@ -1,4 +1,5 @@
 const HARVESTER_1 = "Harvester1";
+const HARVESTER_2 = "Harvester2";
 const SPAWN_1 = "Spawn1";
 
 export class CreepManager {
@@ -9,12 +10,18 @@ export class CreepManager {
       this.spawnHarvester(spawn, HARVESTER_1);
     }
 
-    const creep = Game.creeps[HARVESTER_1];
+    if (this.shouldSpawnHarvester(HARVESTER_2)) {
+      this.spawnHarvester(spawn, HARVESTER_2);
+    }
 
-    if (this.shouldTransferEnergyToSpawn(creep)) {
-      this.transferEnergyToSpawn(spawn, creep);
-    } else {
-      this.harvestEnergy(creep);
+    for (const creepName in Game.creeps) {
+      const creep = Game.creeps[creepName];
+
+      if (this.shouldTransferEnergyToSpawn(creep)) {
+        this.transferEnergyToSpawn(spawn, creep);
+      } else {
+        this.harvestEnergy(creep);
+      }
     }
   }
 
